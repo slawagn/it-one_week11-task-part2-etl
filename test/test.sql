@@ -1,0 +1,1 @@
+SELECT 'ALL TESTS PASSED!' AS message

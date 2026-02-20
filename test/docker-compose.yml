@@ -1,0 +1,35 @@
+services:
+  test-db-src:
+    image: 'postgres:18.1-trixie'
+    container_name: test-db-src
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+  test-db-dest:
+    image: 'postgres:18.1-trixie'
+    container_name: test-db-dest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ./test.sql:/tmp/test-db-dest-env/test.sql
+  test-spark-env:
+    image: quay.io/jupyter/pyspark-notebook:2026-02-02
+    container_name: test-spark-env
+    command: sleep infinity
+    depends_on:
+      - test-db-src
+      - test-db-dest
+    environment:
+      POSTGRES_SRC_HOST: test-db-src
+      POSTGRES_SRC_PORT: 5432
+      POSTGRES_SRC_DB: postgres
+      POSTGRES_SRC_USER: postgres
+      POSTGRES_SRC_PASSWORD: password
+      POSTGRES_DEST_HOST: test-db-dest
+      POSTGRES_DEST_PORT: 5433
+      POSTGRES_DEST_DB: postgres
+      POSTGRES_DEST_USER: postgres
+      POSTGRES_DEST_PASSWORD: password
+    volumes:
+      - ../spark-etl.py:/tmp/spark-env/spark-etl.py
