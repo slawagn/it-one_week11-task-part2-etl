@@ -27,6 +27,3 @@ data = [
 cols = ["Key", "Value"]
 df = spark.createDataFrame(data, cols)
 df.show()
-
-
-query.awaitTermination()
