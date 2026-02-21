@@ -1,0 +1,14 @@
+test-job:
+  image: docker:29.2.1-dind
+  stage: test
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+  services:
+    - name: docker:dind
+      alias: docker
+      command: ["--tls=false"]
+  script:
+    - cd test
+    - ./test.sh
