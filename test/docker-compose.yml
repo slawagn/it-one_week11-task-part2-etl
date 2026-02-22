@@ -5,6 +5,8 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
+    volumes:
+      - ./seed.sql:/docker-entrypoint-initdb.d/seed.sql
   test-db-dest:
     image: 'postgres:18.1-trixie'
     container_name: test-db-dest
@@ -27,7 +29,7 @@ services:
       POSTGRES_SRC_USER: postgres
       POSTGRES_SRC_PASSWORD: password
       POSTGRES_DEST_HOST: test-db-dest
-      POSTGRES_DEST_PORT: 5433
+      POSTGRES_DEST_PORT: 5432
       POSTGRES_DEST_DB: postgres
       POSTGRES_DEST_USER: postgres
       POSTGRES_DEST_PASSWORD: password

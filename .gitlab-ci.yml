@@ -13,4 +13,4 @@ test-job:
     - cd test
     - ./test.sh
   rules:
-    - if: $CI_COMMIT_BRANCH == test
+    - if: '$CI_COMMIT_BRANCH == "test"'
